@@ -1,10 +1,10 @@
 const {Model, DataTypes} = require('sequelize');
 const sequelize = require ('../config/connection');
 
-class Comment extends Model {
+class Blog extends Model {
 
 }
-Comment.init(
+Blog.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,8 +12,12 @@ Comment.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    text: {
+    title: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    body: {
+      type: DataTypes.STRING(10000),
       allowNull: false,
       validate: {
         len: [1],
@@ -21,26 +25,17 @@ Comment.init(
     },
     user_id: {
       type: DataTypes.INTEGER,
-      onDelete: 'CASCADE',
       references: {
         model: "user",
         key: 'id'
       },
     },
-    blog_id: {
-      type: DataTypes.INTEGER,
-      onDelete: 'CASCADE',
-      references: {
-        model: "blog",
-        key: 'id'
-      },
-    }
   },
   {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'comment',
+    modelName: 'blog',
   }
 );
-module.exports = Comment;
+module.exports = Blog;
